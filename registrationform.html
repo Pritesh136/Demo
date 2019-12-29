@@ -1,0 +1,282 @@
+<html>
+
+<head>
+	<title> Signup </title>
+	<center>
+		<font color="Red" ; size="5px">Create an account</font></br>
+		<font color="Red" ; size="3px">Its quick and easy</font>
+	</center>
+	<script>
+		function chkusername() {
+			errmsg = "";
+			var uname = document.getElementById("txtname").value;
+			if (uname == "" || uname.length < 5) {
+				errmsg = "Enter valid Username";
+				document.getElementById("erru").innerHTML = errmsg;
+
+				return false;
+			}
+			else {
+				document.getElementById("erru").innerHTML = errmsg;
+				return true;
+			}
+
+		}
+		function validatepass() {
+			errmsg = "";
+			var str = document.getElementById("txtpass").value;
+			if ((str.match(/[a-z]/g) && str.match(/[A-Z]/g) && str.match(/[0-9]/g) && str.match(
+				/[^a-zA-Z\d]/g) && str.length >= 8)) {
+				document.getElementById("errp").innerHTML = errmsg;
+				return true;
+			}
+			else {
+
+				errmsg = "Enter valid Password";
+				document.getElementById("errp").innerHTML = errmsg;
+				return false;
+			}
+
+		}
+		function matchpass() {
+			errmsg = "";
+			var str = document.getElementById("txtpass").value;
+			var str1 = document.getElementById("txtrpass").value;
+			if (str1.match(str)) {
+				document.getElementById("err").innerHTML = errmsg;
+				return true;
+			}
+			else {
+
+				errmsg = "Password not match";
+				document.getElementById("err").innerHTML = errmsg;
+				return false;
+			}
+
+		}
+		function number() {
+			errmsg = "";
+			var str = document.getElementById("txtnumber").value;
+			var filter = /[0-9]/g;
+
+			if (str.match(filter) && str.length === 10) {
+
+				document.getElementById("errn").innerHTML = errmsg;
+				return true;
+
+			}
+			else {
+				errmsg = "Enter valid Number";
+				document.getElementById("errn").innerHTML = errmsg;
+
+				return false;
+			}
+
+		}
+		function email() {
+			errmsg = "";
+			var str = document.getElementById("txtemail").value;
+			var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+			if (!filter.test(str)) {
+				errmsg = "Enter valid email";
+				document.getElementById("errm").innerHTML = errmsg;
+
+				return false;
+			}
+			else {
+				document.getElementById("errm").innerHTML = errmsg;
+				return true;
+			}
+		}
+		function check() {
+
+
+
+
+			var t = document.getElementById("check").checked;
+			if (t == true) {
+				document.getElementById("errc").innerHTML = errmsg;
+				return true;
+			}
+			else {
+
+				errmsg = "Check the checkbox";
+				document.getElementById("errc").innerHTML = errmsg;
+
+				return false;
+			}
+		}
+		function resetform() {
+			document.getElementById("myform").reset();
+		}
+		// Captcha -->
+		function DrawCaptcha() {
+			var alpha = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
+			var i;
+			for (i = 0; i < 6; i++) {
+				var a = Math.ceil(Math.random() * 10) + '';
+				var b = alpha[Math.floor(Math.random() * alpha.length) + ''];
+				var c = Math.ceil(Math.random() * 10) + '';
+				var d = alpha[Math.floor(Math.random() * alpha.length) + ''];
+				var e = Math.ceil(Math.random() * 10) + '';
+				var f = Math.ceil(Math.random() * 10) + '';
+				var g = alpha[Math.floor(Math.random() * alpha.length) + ''];
+				var code = a + ' ' + b + ' ' + ' ' + c + ' ' + d + ' ' + e + ' ' + f + ' ' + g;
+				document.getElementById("txtCaptcha").value = code
+			}
+		}
+
+		// Validate the Entered input aganist the generated security code function   
+		function ValidCaptcha() {
+			var str1 = removeSpaces(document.getElementById('txtCaptcha').value);
+			var str2 = removeSpaces(document.getElementById('txtInput').value);
+			if (str1 == str2) return true;
+			return false;
+
+		}
+
+		// Remove the spaces from the entered and generated code
+		function removeSpaces(string) {
+			return string.split(' ').join('');
+		}
+
+
+	</script>
+</head>
+<style>
+	#err,
+	#errp,
+	#erru,
+	.err {
+		color: red;
+	}
+
+	form {
+		background-color: cadetblue;
+	}
+
+	body {}
+
+	a {
+		font-size: 20px;
+		font-family: san-serif;
+		font-style: oblique;
+		color: black;
+	}
+
+	td {
+		color: black;
+		font-family: Georiga;
+
+	}
+</style>
+<center>
+	<form id="myform" action="signup.php" method="_GET" onsubmit="return check()" onload="DrawCaptcha();">
+
+		<body onload=" DrawCaptcha()">
+
+			<table border="3" width="25%" cellspacing="10">
+				<th colspan="2">
+					<font color="Blue" ;>Registeration Form</font>
+				</th>
+				<tr>
+					<td>Username:</div>
+					<td><input type="text" name="txtname" id="txtname" placeholder="Enter Username"
+							onblur="chkusername()"></div>
+						<div id="erru" class="err"></div>
+				</tr>
+				<tr>
+					<td>Password:</div>
+					<td><input type="password" name="password" id="txtpass" onblur="validatepass()"
+							placeholder="Enter Password"></div>
+						<div id="errp" class="err"></div>
+				</tr>
+				<tr>
+					<td>Confirm Password:</div>
+					<td><input type="password" name="password" id="txtrpass" onblur="matchpass()"
+							placeholder="Re-Enter Password"></div>
+						<div id="err" class="err"></div>
+				</tr>
+
+				<tr>
+					<td>Email:</div>
+					<td><input type="email" name="txtemail" id="txtemail" onblur="email()" placeholder="Enter EmailID"
+							required></div>
+						<div id="errm" class="err"></div>
+				</tr>
+
+				<tr>
+					<td>Mobile No:</div>
+					<td><input type="text" name="txtnumber" id="txtnumber" onblur="number()" placeholder="+91"
+							maxlength="10"></div>
+						<div id="errn" class="err"></div>
+				</tr>
+
+
+
+				<tr>
+					<td>Date of Birth:</div>
+					<td><input type="date" name="DOB"></div>
+				</tr>
+				<tr>
+					<td>Gender:</div>
+					<td nowrap><input type="radio" name="radgen" value="m">Male
+						<input type="radio" name="radgen" value="f">Female
+						<input type="radio" name="radgen" value="o">Others</div>
+				</tr>
+				<tr>
+					<td>Country: </div>
+					<td><select type="select" name="selcountry">
+							<option>India</option>
+							<option>Austrailia</option>
+							<option>Sweden</option>
+							<option>America</option>
+
+							</div>
+				</tr>
+
+
+
+				<tr>
+					<td>Address:</div>
+					<td><textarea type="textarea" name="addrearea" cols="22"></textarea></div>
+				</tr>
+				<tr>
+					<td nowrap colspan="2">
+						<input type="checkbox" name="check" id="check" /><label>I agree Terms & condition</label>
+						<div id="errc" class="err"></div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="text" id="txtCaptcha" style="background-image:url(1.jpg); text-align:center; border:none;
+									font-weight:bold; font-family:Modern" />
+						<input type="button" id="btnrefresh" value="Refresh" onclick="DrawCaptcha();" />
+						
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="text" id="txtInput" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input id="Button1" type="button" value="Check" onclick="alert(ValidCaptcha());" />
+					</td>
+				</tr>
+				<tr>
+					<td>&emsp;&emsp;
+						<input type="submit" value="Sign Up"></td>
+					<td>&emsp;&emsp;<input type="reset" value="Reset"></td>
+				</tr>
+			</table>
+
+
+		</body>
+	</form>
+</center>
+
+</html>
